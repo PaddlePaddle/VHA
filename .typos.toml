@@ -1,0 +1,5 @@
+[default.extend-words]
+# "subtile" / "subtiles" are legitimate GPU kernel domain terms
+# describing a subdivision of a tile in flash-attention CUDA code.
+subtile = "subtile"
+subtiles = "subtiles"

@@ -1,0 +1,25 @@
+__pycache__
+*.so
+build
+.coverage_*
+*.egg-info
+*~
+logs
+.vscode
+local/
+wandb/
+.venv
+runs/
+/test_cases/
+**/dist/
+.idea
+log
+ducc_storage/
+paddlefleet-*.whl
+test_log
+.ninja_log
+.claude
+.ruff_cache/
+
+# Generated version files
+src/paddlefleet/_version.py

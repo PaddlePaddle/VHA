@@ -1,0 +1,241 @@
+# Copyright (c) 2025 PaddlePaddle Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[project]
+name = "paddlefleet"
+dynamic = ["version", "readme"]
+description = "PaddleFleet-based implementation of Virtual Head Attention (VHA)"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "colorlog>=6.10.1",
+    "paddlepaddle-gpu==3.4.0.post20260608+f3f5f3fd150",
+    "paddlefleet-ops==0.4.0.dev20260610+6f5e92b4",
+    "paddle-nvidia-nvshmem-cu13==3.4.5",
+    "tilelang-paddle==0.1.13",
+]
+license = "Apache-2.0"
+authors = [{ name = "PaddlePaddle", email = "Paddle-better@baidu.com" }]
+keywords = [
+    "PaddlePaddle",
+    "PaddleFleet",
+    "Virtual Head Attention",
+    "grouped-query attention",
+    "long-context",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/GuoxiaWang/VHA"
+
+[build-system]
+requires = ["setuptools>=66.1.0"]
+build-backend = "build_backend"
+backend-path = ["."]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["paddlefleet*"]
+
+[tool.setuptools.dynamic]
+readme = { file = "README.md", content-type = "text/markdown" }
+version = { attr = "paddlefleet._version.__version__" }
+
+[dependency-groups]
+test = [
+    "wrapt",
+    "matplotlib",
+    "pytest",
+    "pyyaml",
+    "parameterized",
+]
+build = [
+    "pip",
+    "setuptools>=66.1.0",
+    "packaging>=24.2"
+]
+linting = [
+    "ruff~=0.14.0",
+]
+[tool.uv]
+default-groups = ["build", "test"]
+link-mode = "copy"
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[tool.uv.sources]
+paddlefleet-ops = { index = "paddle-cu13" }
+paddlepaddle-gpu = { index = "paddle-cu13" }
+paddle-nvidia-nvshmem-cu13 = { index = "paddle-cu13" }
+
+
+[[tool.uv.index]]
+name = "paddle-cu13"
+url = "https://www.paddlepaddle.org.cn/packages/nightly/cu130/"
+explicit = true
+
+[tool.ruff]
+line-length = 80
+target-version = "py310"
+
+[tool.ruff.format]
+
+[tool.ruff.lint]
+select = [
+    # Pycodestyle
+    "E",
+    "W",
+
+    # Pyflakes
+    "F",
+
+    # Isort
+    "I",
+
+    # Comprehensions
+    "C4",
+
+    # Debugger
+    "T100",
+
+    # Pyupgrade
+    "UP",
+
+    # Flake8-pyi
+    "PYI",
+
+    # NumPy-specific rules
+    "NPY001",
+    "NPY003",
+    "NPY201",
+
+    # Bugbear
+    "B002",
+    "B003",
+    "B004",
+    "B005",
+    "B009",
+    "B010",
+    "B011",
+    "B012",
+    "B013",
+    "B014",
+    "B015",
+    "B016",
+    "B017",
+    "B018",
+    "B019",
+    "B020",
+    "B021",
+    "B022",
+    "B025",
+    "B029",
+    "B032",
+
+    # Pylint
+    "PLE",
+    "PLC3002",
+    "PLR0206",
+    "PLR0402",
+    "PLR1711",
+    "PLR1722",
+    "PLW3301",
+
+    # Flake8-simplify
+    "SIM101",
+    "SIM117",
+
+    # Pygrep-hooks
+    "PGH004",
+
+    # Flake8-type-checking
+    "TC",
+
+    # Ruff-specific rules
+    "RUF005",
+    "RUF008",
+    "RUF009",
+    "RUF010",
+    "RUF013",
+    "RUF015",
+    "RUF016",
+    "RUF017",
+    "RUF018",
+    "RUF019",
+    "RUF020",
+    "RUF024",
+    "RUF026",
+    "RUF100",
+
+    # Flake8-raise
+    "RSE",
+
+    # Flake8-quotes
+    "Q003",
+    "Q004",
+
+    # Refurb
+    "FURB",
+
+    # Flake8-future-annotations
+    "FA",
+]
+unfixable = ["NPY001"]
+ignore = [
+    # Whitespace before ‘,’, ‘;’, or ‘:’, it is not compatible with ruff format
+    "E203",
+    # Module level import not at top of file
+    "E402",
+    # Line too long (82 > 79 characters)
+    "E501",
+    # Do not compare types, use `isinstance()`
+    "E721",
+    # Do not use bare except, specify exception instead
+    "E722",
+    # Do not assign a lambda expression, use a def
+    "E731",
+    # Do not use variables named ‘l’, ‘O’, or ‘I’
+    "E741",
+    # `name` may be undefined, or defined from star imports: `module`
+    "F405",
+    # Local variable name is assigned to but never used
+    "F841",
+    # It not met the "Explicit is better than implicit" rule
+    "UP015",
+    # collections.namedtuple can be quickly created a inlined class
+    "PYI024",
+    # `__all__.append` is a common pattern in Paddle
+    "PYI056",
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["paddlefleet"]
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore for re-export in __init__ files
+"__init__.py" = ["PLC0414"]
